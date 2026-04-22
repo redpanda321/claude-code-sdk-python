@@ -1,0 +1,70 @@
+[build-system]
+requires = ["hatchling>=1.24", "hatch-vcs>=0.4"]
+build-backend = "hatchling.build"
+
+[project]
+name = "claude-code-sdk"
+description = "Python SDK port of claude-code (CCB) -- a library-first, CLI-free Claude Code agent toolkit."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "redpanda321" }]
+requires-python = ">=3.11"
+dynamic = ["version"]
+dependencies = [
+  "anyio>=4.4",
+  "httpx>=0.27",
+  "pydantic>=2.7",
+  "mcp>=1.0",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Typing :: Typed",
+]
+
+[project.optional-dependencies]
+agent-sdk = ["claude-agent-sdk>=0.1"]
+dev = [
+  "pytest>=8",
+  "pytest-asyncio>=0.23",
+  "ruff>=0.6",
+  "pyright>=1.1.370",
+]
+
+[project.urls]
+Homepage = "https://github.com/redpanda321/claude-code-sdk-python"
+Source = "https://github.com/redpanda321/claude-code-sdk-python"
+Issues = "https://github.com/redpanda321/claude-code-sdk-python/issues"
+
+# NOTE: NO [project.scripts] -- CLI/TUI lives in a separate repo per PY-SDK-04 / D-04.
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/claude_code_sdk/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/claude_code_sdk"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pyright]
+include = ["src", "tests"]
+pythonVersion = "3.11"
+typeCheckingMode = "strict"
+reportMissingTypeStubs = "warning"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
