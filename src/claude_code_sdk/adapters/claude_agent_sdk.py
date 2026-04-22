@@ -43,7 +43,7 @@ async def _maybe_await(value: Any) -> Any:
     return value
 
 
-def to_agent_sdk_tool(tool: Tool[Any, Any, Any]) -> "SdkMcpTool":
+def to_agent_sdk_tool(tool: Tool[Any, Any, Any]) -> SdkMcpTool:
     """Wrap a CCB-native Tool so claude-agent-sdk can register it as an MCP tool.
 
     Raises:
@@ -114,9 +114,7 @@ def from_agent_sdk_tool(sdk_tool: Any) -> Tool[Any, Any, Any]:
             self, input: BaseModel, context: ToolContext
         ) -> AsyncIterator[ToolResult[Any]]:
             args = (
-                input.model_dump()
-                if hasattr(input, "model_dump")
-                else dict(input)  # type: ignore[arg-type]
+                input.model_dump() if hasattr(input, "model_dump") else dict(input)  # type: ignore[arg-type]
             )
             output = await _maybe_await(_handler(args))
             yield ToolResult(output=output)

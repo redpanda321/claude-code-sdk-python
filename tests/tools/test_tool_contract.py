@@ -1,15 +1,13 @@
-"""Contract smoke test for claude_code_sdk.tools.Tool Protocol.
-
-RED phase: this test MUST fail before tool.py is implemented (Plan 03 Task 2).
-"""
+"""Contract smoke test for claude_code_sdk.tools.Tool Protocol."""
 
 from __future__ import annotations
 
 import asyncio
+from dataclasses import FrozenInstanceError
 from typing import Any
 
 import pytest
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
 
 from claude_code_sdk.tools import (
     PermissionResult,
@@ -36,9 +34,7 @@ class EchoTool:
     def validate_input(self, raw: dict[str, Any]) -> EchoInput:
         return EchoInput.model_validate(raw)
 
-    async def check_permissions(
-        self, input: EchoInput, context: ToolContext
-    ) -> PermissionResult:
+    async def check_permissions(self, input: EchoInput, context: ToolContext) -> PermissionResult:
         return PermissionResult(decision="allow")
 
     async def can_use_tool(self, context: ToolContext) -> bool:
@@ -55,9 +51,7 @@ class EchoTool:
 class DenyTool(EchoTool):
     name = "deny-echo"
 
-    async def check_permissions(
-        self, input: EchoInput, context: ToolContext
-    ) -> PermissionResult:
+    async def check_permissions(self, input: EchoInput, context: ToolContext) -> PermissionResult:
         return PermissionResult(decision="deny", reason="test-denied")
 
 
@@ -71,8 +65,6 @@ def _context() -> ToolContext:
 
 def test_tool_is_runtime_checkable_protocol() -> None:
     """Tool must be a runtime-checkable Protocol; a conformant instance satisfies isinstance."""
-    from typing import get_origin
-
     # Protocol itself is not a concrete class; check attribute presence.
     assert hasattr(Tool, "_is_protocol"), "Tool must be typing.Protocol"
     example = EchoTool()
@@ -81,7 +73,7 @@ def test_tool_is_runtime_checkable_protocol() -> None:
 
 def test_tool_context_is_frozen_dataclass() -> None:
     ctx = ToolContext(session_id="s1", cwd="/tmp", abort_signal=object())
-    with pytest.raises(Exception):
+    with pytest.raises(FrozenInstanceError):
         ctx.session_id = "s2"  # type: ignore[misc]
 
 
@@ -115,5 +107,5 @@ async def test_check_permissions_deny_is_honoured() -> None:
 
 def test_validate_input_raises_on_bad_payload() -> None:
     tool = EchoTool()
-    with pytest.raises(Exception):
+    with pytest.raises(ValidationError):
         tool.validate_input({"wrong_field": 123})

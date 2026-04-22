@@ -35,9 +35,7 @@ class EchoTool:
     def validate_input(self, raw: dict[str, Any]) -> EchoInput:
         return EchoInput.model_validate(raw)
 
-    async def check_permissions(
-        self, input: EchoInput, context: ToolContext
-    ) -> PermissionResult:
+    async def check_permissions(self, input: EchoInput, context: ToolContext) -> PermissionResult:
         return PermissionResult(decision="allow")
 
     async def can_use_tool(self, context: ToolContext) -> bool:
@@ -65,6 +63,7 @@ def _ctx() -> ToolContext:
 
 
 # ---------- to_agent_sdk_tool ----------
+
 
 def test_to_agent_sdk_tool_preserves_name_description() -> None:
     pytest.importorskip("claude_agent_sdk")
@@ -98,6 +97,7 @@ def test_to_agent_sdk_tool_raises_when_extra_missing(
 
 
 # ---------- from_agent_sdk_tool ----------
+
 
 def test_from_agent_sdk_tool_is_runtime_tool() -> None:
     from claude_code_sdk.adapters import from_agent_sdk_tool
@@ -154,6 +154,7 @@ def test_from_agent_sdk_tool_validate_input_is_permissive() -> None:
 
 
 # ---------- round-trip ----------
+
 
 @pytest.mark.asyncio
 async def test_round_trip_preserves_name_description_and_output() -> None:

@@ -68,3 +68,8 @@ reportMissingTypeStubs = "warning"
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
+
+[dependency-groups]
+dev = [
+    "pytest-asyncio>=1.3.0",
+]
