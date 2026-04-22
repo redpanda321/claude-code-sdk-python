@@ -55,12 +55,14 @@ packages = ["src/claude_code_sdk"]
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+extend-exclude = ["src/claude_code_sdk/_version.py"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]
 
 [tool.pyright]
 include = ["src", "tests"]
+exclude = ["src/claude_code_sdk/_version.py"]
 pythonVersion = "3.11"
 typeCheckingMode = "strict"
 reportMissingTypeStubs = "warning"
@@ -68,8 +70,3 @@ reportMissingTypeStubs = "warning"
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
-
-[dependency-groups]
-dev = [
-    "pytest-asyncio>=1.3.0",
-]
