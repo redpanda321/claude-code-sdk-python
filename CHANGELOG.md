@@ -71,12 +71,20 @@ Version strings are derived from git tags via `hatch-vcs`.
   `HookRegistry` integration (round-trip dispatch verified). Ports CCB
   `src/plugins/**` + plugin side of `src/utils/hooks/registerHook.ts`.
   9-test suite.
+- **`claude_code_sdk.commands`** (Plan 12): `CommandRegistry`,
+  `CommandNotFoundError`, `parse_invocation`, `Command`,
+  `CommandContext`, `CommandResult`, `CommandHandler`. Case-insensitive
+  registry with hidden-command filtering; `/name args` parser strips
+  the leading slash; dispatch wraps plain-string handler returns into
+  `CommandResult`. Built-in commands (`/init`, `/commit`, `/review`, ...)
+  deferred to a follow-up phase. Ports CCB `src/commands/**`. 13-test
+  suite.
 
 ### Known gaps
 
-- Six of twelve barrels are placeholder-only (mcp, hooks, memdir,
-  skills, plugins populated in Plans 07+09+13+11+10); remaining six
-  drain over milestones 0.2.x -- 0.5.x.
+- Five of twelve barrels are placeholder-only (mcp, hooks, memdir,
+  skills, plugins, commands populated in Plans 07+09+13+11+10+12);
+  remaining five drain over milestones 0.2.x -- 0.5.x.
 - Pyright runs with `continue-on-error: true` during alpha carve-in; will be
   hard-failed once all barrels are populated.
 

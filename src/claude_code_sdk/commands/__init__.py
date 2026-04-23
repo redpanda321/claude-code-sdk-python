@@ -1,13 +1,21 @@
-"""commands -- Built-in slash-command registry.
+"""Slash-command registry + types.
 
-Roadmap (populated in follow-up phases):
-    - src/claude_code_sdk/commands/<registry|types>.py
-        ported from hanggent/external/claude-code/src/commands/**
-
-Shape reference: claude-code-sdk-ts package export `./commands`
-  (see hanggent/external/claude-code-sdk-ts/package.json[exports])
+Ports CCB ``src/commands/**`` per CONTEXT D-19. Built-in commands
+(``/init``, ``/commit``, ``/review``, ...) are deferred to a follow-up
+phase; this module exposes the typed registry contract only.
 """
 
 from __future__ import annotations
 
-__all__: list[str] = []
+from .registry import CommandNotFoundError, CommandRegistry, parse_invocation
+from .types import Command, CommandContext, CommandHandler, CommandResult
+
+__all__ = [
+    "Command",
+    "CommandContext",
+    "CommandHandler",
+    "CommandNotFoundError",
+    "CommandRegistry",
+    "CommandResult",
+    "parse_invocation",
+]
