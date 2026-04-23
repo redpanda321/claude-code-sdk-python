@@ -98,13 +98,22 @@ Version strings are derived from git tags via `hatch-vcs`.
   `/v1/v1/messages` 404 regression (cf. repo memory
   *Claude Code Anthropic runtime URL normalization*). Ports CCB
   `src/services/api/**` per CONTEXT D-18. 18-test suite.
+- **`claude_code_sdk.subagents`** (Plan 14): `SubagentDispatcher`,
+  `SubagentDefinition`, `SubagentEvent`, `SubagentDispatchError`,
+  `SubagentRunResult`, `load_definition`. The dispatcher registers
+  named subagent configs (system prompt + tool allow-list + model),
+  resolves them by name, and streams `SubagentEvent`s via an injected
+  `Provider` (Plan 08). Tool names are validated against an injected
+  registry (Plan 03). Multi-turn tool_use recovery, hook dispatch, and
+  cost tracking are deferred to a follow-up plan. Ports CCB
+  `src/agents/**` + `src/tools/AgentTool/forkSession.ts`. 7-test suite.
 
 ### Known gaps
 
-- Four of twelve barrels are placeholder-only (mcp, hooks, memdir,
-  skills, plugins, commands, permissions, providers populated in Plans
-  07+09+13+11+10+12+15+08); remaining four drain over milestones
-  0.2.x -- 0.5.x.
+- Three of twelve barrels are placeholder-only (mcp, hooks, memdir,
+  skills, plugins, commands, permissions, providers, subagents
+  populated in Plans 07+09+13+11+10+12+15+08+14); remaining three drain
+  over milestones 0.2.x -- 0.5.x.
 - Pyright runs with `continue-on-error: true` during alpha carve-in; will be
   hard-failed once all barrels are populated.
 
