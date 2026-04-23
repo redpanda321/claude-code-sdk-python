@@ -107,13 +107,24 @@ Version strings are derived from git tags via `hatch-vcs`.
   registry (Plan 03). Multi-turn tool_use recovery, hook dispatch, and
   cost tracking are deferred to a follow-up plan. Ports CCB
   `src/agents/**` + `src/tools/AgentTool/forkSession.ts`. 7-test suite.
+- **`claude_code_sdk.compaction`** (Plan 16): `microcompact`,
+  `autocompact_if_needed`, `estimate_tokens`, `snip_compact`.
+  `snip_compact` is a non-LLM truncator that keeps leading system
+  messages + last N non-system entries. `microcompact` summarises the
+  head via an injected `Provider` (Plan 08) and returns
+  `[leading_system?, summary, *tail]`. `autocompact_if_needed` gates
+  `microcompact` behind a char/4 token estimate (matching CCB's cheap
+  heuristic). Ports CCB `src/services/compact/microcompact.ts` +
+  `snipCompact.ts` + `autoCompactIfNeeded.ts`. Precise tokenizer,
+  richer summary prompt, and per-provider native `count_tokens` APIs
+  deferred. 10-test suite.
 
 ### Known gaps
 
-- Three of twelve barrels are placeholder-only (mcp, hooks, memdir,
-  skills, plugins, commands, permissions, providers, subagents
-  populated in Plans 07+09+13+11+10+12+15+08+14); remaining three drain
-  over milestones 0.2.x -- 0.5.x.
+- Two of twelve barrels are placeholder-only (mcp, hooks, memdir,
+  skills, plugins, commands, permissions, providers, subagents,
+  compaction populated in Plans 07+09+13+11+10+12+15+08+14+16);
+  remaining two drain over milestones 0.2.x -- 0.5.x.
 - Pyright runs with `continue-on-error: true` during alpha carve-in; will be
   hard-failed once all barrels are populated.
 

@@ -1,15 +1,17 @@
-"""compaction -- Context-window compaction strategies.
+"""Compaction trio.
 
-Roadmap (populated in follow-up phases):
-    - src/claude_code_sdk/compaction/<snip|micro|strategy>.py
-        ported from hanggent/external/claude-code/src/compaction/**
-                    + hanggent/external/claude-code/src/snipCompact.ts
-                    + hanggent/external/claude-code/src/microcompact.ts
-
-Shape reference: claude-code-sdk-ts package export `./compaction`
-  (see hanggent/external/claude-code-sdk-ts/package.json[exports])
+Ported from CCB ``src/services/compact/**`` per CONTEXT D-19.
 """
 
 from __future__ import annotations
 
-__all__: list[str] = []
+from .autocompact import autocompact_if_needed, estimate_tokens
+from .microcompact import microcompact
+from .snip import snip_compact
+
+__all__ = [
+    "autocompact_if_needed",
+    "estimate_tokens",
+    "microcompact",
+    "snip_compact",
+]
