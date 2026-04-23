@@ -63,12 +63,20 @@ Version strings are derived from git tags via `hatch-vcs`.
   wins dedupe by skill name; malformed files and missing roots are
   silently skipped. Adds `pyyaml>=6` runtime dependency. Ports CCB
   `src/skills/**`. 12-test suite.
+- **`claude_code_sdk.plugins`** (Plan 10): `PluginLoader`, `LoadedPlugin`,
+  `PluginLoadError`, `PluginManifest`, `PluginHookSpec`,
+  `PluginCommandSpec`, `load_manifest`. Pydantic v2 schema for
+  `plugin.json`, multi-plugin discovery via `*/plugin.json` glob, dotted
+  `"pkg.module:object"` handler resolution via `importlib`, and
+  `HookRegistry` integration (round-trip dispatch verified). Ports CCB
+  `src/plugins/**` + plugin side of `src/utils/hooks/registerHook.ts`.
+  9-test suite.
 
 ### Known gaps
 
-- Seven of twelve barrels are placeholder-only (mcp, hooks, memdir,
-  skills populated in Plans 07+09+13+11); remaining seven drain over
-  milestones 0.2.x -- 0.5.x.
+- Six of twelve barrels are placeholder-only (mcp, hooks, memdir,
+  skills, plugins populated in Plans 07+09+13+11+10); remaining six
+  drain over milestones 0.2.x -- 0.5.x.
 - Pyright runs with `continue-on-error: true` during alpha carve-in; will be
   hard-failed once all barrels are populated.
 

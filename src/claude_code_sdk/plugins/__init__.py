@@ -1,13 +1,20 @@
-"""plugins -- Plugin discovery and loading.
+"""Plugin discovery + loader surface.
 
-Roadmap (populated in follow-up phases):
-    - src/claude_code_sdk/plugins/<loader|registry|types>.py
-        ported from hanggent/external/claude-code/src/plugins/**
-
-Shape reference: claude-code-sdk-ts package export `./plugins`
-  (see hanggent/external/claude-code-sdk-ts/package.json[exports])
+Ports CCB ``src/plugins/**`` + the plugin-side of
+``src/utils/hooks/registerHook.ts`` per CONTEXT D-19.
 """
 
 from __future__ import annotations
 
-__all__: list[str] = []
+from .loader import LoadedPlugin, PluginLoader, PluginLoadError
+from .manifest import PluginCommandSpec, PluginHookSpec, PluginManifest, load_manifest
+
+__all__ = [
+    "LoadedPlugin",
+    "PluginCommandSpec",
+    "PluginHookSpec",
+    "PluginLoadError",
+    "PluginLoader",
+    "PluginManifest",
+    "load_manifest",
+]
