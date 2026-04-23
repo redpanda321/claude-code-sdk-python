@@ -44,11 +44,18 @@ Version strings are derived from git tags via `hatch-vcs`.
   wrapper over the PyPI `mcp` package (stdio + SSE transports) with
   lazy transport imports and Pydantic v2 snake_case schemas. Ports CCB's
   MCP client surface. 12-test contract suite.
+- **`claude_code_sdk.hooks`** (Plan 09): `HookRegistry`, `HookNotFoundError`,
+  `HookEvent`, `HookPayload`, `HookDecision`, `HookHandler`. Seven
+  lifecycle events (`pre_tool_use`, `post_tool_use`, `user_prompt_submit`,
+  `session_start`, `session_end`, `stop`, `notification`); concurrent
+  `asyncio.gather` dispatch with first-`block` short-circuit and
+  last-write-wins `modify` merge. Ports CCB `src/utils/hooks/**`. 12-test
+  suite.
 
 ### Known gaps
 
-- Ten of twelve barrels are placeholder-only (mcp populated in Plan 07);
-  remaining ten drain over milestones 0.2.x -- 0.5.x.
+- Nine of twelve barrels are placeholder-only (mcp, hooks populated in
+  Plans 07+09); remaining nine drain over milestones 0.2.x -- 0.5.x.
 - Pyright runs with `continue-on-error: true` during alpha carve-in; will be
   hard-failed once all barrels are populated.
 

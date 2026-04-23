@@ -1,14 +1,23 @@
 """hooks -- Agent-lifecycle hook system.
 
-Roadmap (populated in follow-up phases):
-    - src/claude_code_sdk/hooks/<registry|types|runner>.py
-        ported from hanggent/external/claude-code/src/hooks/**
-                    + hanggent/external/claude-code/src/hookRegistry.ts
+Ported from CCB ``src/utils/hooks/**`` (NOT CCB's ``src/hooks/`` which holds
+React/Ink UI hooks). Shape mirrors ``claude-code-sdk-ts/src/hooks/index.ts``.
 
-Shape reference: claude-code-sdk-ts package export `./hooks`
-  (see hanggent/external/claude-code-sdk-ts/package.json[exports])
+Exports:
+    HookRegistry, HookNotFoundError -- registration + dispatch
+    HookEvent, HookPayload, HookDecision, HookHandler -- typed contracts
 """
 
 from __future__ import annotations
 
-__all__: list[str] = []
+from .registry import HookNotFoundError, HookRegistry
+from .types import HookDecision, HookEvent, HookHandler, HookPayload
+
+__all__ = [
+    "HookDecision",
+    "HookEvent",
+    "HookHandler",
+    "HookNotFoundError",
+    "HookPayload",
+    "HookRegistry",
+]
