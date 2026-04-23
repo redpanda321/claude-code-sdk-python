@@ -51,6 +51,13 @@ Version strings are derived from git tags via `hatch-vcs`.
   `asyncio.gather` dispatch with first-`block` short-circuit and
   last-write-wins `modify` merge. Ports CCB `src/utils/hooks/**`. 12-test
   suite.
+- **`claude_code_sdk.memdir`** (Plan 13): `load_memories`, `walk_up`,
+  `MemoryEntry`, `MemoryScope`. Walks up from cwd collecting `AGENTS.md`,
+  `CLAUDE.md`, and nested `.claude/memories/*.md`; appends user-scoped
+  Eight of twelve barrels are placeholder-only (mcp, hooks, memdir
+  populated in Plans 07+09+13); remaining eight drain over milestones
+ rc/memdir/**`. 9-test
+  suite.
 
 ### Known gaps
 

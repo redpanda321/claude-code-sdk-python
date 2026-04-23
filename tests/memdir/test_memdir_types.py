@@ -21,9 +21,7 @@ def test_memory_entry_path_is_concrete_pathlib(tmp_path: Path) -> None:
 
 def test_memory_entry_rejects_unknown_scope() -> None:
     with pytest.raises(ValidationError):
-        MemoryEntry.model_validate(
-            {"scope": "team", "path": Path("."), "name": "x", "content": ""}
-        )
+        MemoryEntry.model_validate({"scope": "team", "path": Path("."), "name": "x", "content": ""})
 
 
 def test_memory_entry_round_trip(tmp_path: Path) -> None:

@@ -63,8 +63,8 @@ def test_load_memories_dedupes_by_scope_and_name(tmp_path: Path) -> None:
     entries = load_memories(root / "sub")
     agents = [e for e in entries if e.name == "AGENTS" and e.scope == "project"]
     assert len(agents) == 1
-    # walk_up starts at cwd and walks outward; last write wins -> outer parent overrides inner child.
-    # This matches the plan's "Later entries override earlier ones" contract.
+    # walk_up starts at cwd and walks outward; last write wins -> outer parent overrides child.
+    # This matches the plan's "Later entries override earlier" contract.
     assert agents[0].content == "outer"
 
 

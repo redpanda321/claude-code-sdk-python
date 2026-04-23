@@ -1,14 +1,17 @@
-"""memdir -- Conversation memory + MEMDIR state.
+"""memdir -- Memory-directory loader for AGENTS.md / CLAUDE.md / *.md.
 
-Roadmap (populated in follow-up phases):
-    - src/claude_code_sdk/memdir/<store|reader|writer>.py
-        ported from hanggent/external/claude-code/src/memory/**
-                    + hanggent/external/claude-code/src/memdir/**
-
-Shape reference: claude-code-sdk-ts package export `./memdir`
-  (see hanggent/external/claude-code-sdk-ts/package.json[exports])
+Ported from CCB ``src/memdir/**`` + ``src/memory/**``. Shape mirrors
+``claude-code-sdk-ts/src/memdir/index.ts``.
 """
 
 from __future__ import annotations
 
-__all__: list[str] = []
+from .loader import load_memories, walk_up
+from .types import MemoryEntry, MemoryScope
+
+__all__ = [
+    "MemoryEntry",
+    "MemoryScope",
+    "load_memories",
+    "walk_up",
+]
