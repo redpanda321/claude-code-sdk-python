@@ -1,14 +1,19 @@
-"""permissions -- Tool-call permission context + policies.
+"""Permission context + decision surface.
 
-Roadmap (populated in follow-up phases):
-    - src/claude_code_sdk/permissions/<context|policy|prompts>.py
-        ported from hanggent/external/claude-code/src/permissions/**
-                    + hanggent/external/claude-code/src/ToolPermissionContext.ts
-
-Shape reference: claude-code-sdk-ts package export `./permissions`
-  (see hanggent/external/claude-code-sdk-ts/package.json[exports])
+Ports CCB ``src/permissions/**`` + ``src/ToolPermissionContext.ts`` per
+CONTEXT D-19. :class:`PermissionResult` is re-exported from
+:mod:`claude_code_sdk.tools` -- single source of truth.
 """
 
 from __future__ import annotations
 
-__all__: list[str] = []
+from .context import ToolPermissionContext
+from .decision import PermissionResult, PermissionRule, match_rule, parse_rule
+
+__all__ = [
+    "PermissionResult",
+    "PermissionRule",
+    "ToolPermissionContext",
+    "match_rule",
+    "parse_rule",
+]

@@ -79,12 +79,21 @@ Version strings are derived from git tags via `hatch-vcs`.
   `CommandResult`. Built-in commands (`/init`, `/commit`, `/review`, ...)
   deferred to a follow-up phase. Ports CCB `src/commands/**`. 13-test
   suite.
+- **`claude_code_sdk.permissions`** (Plan 15): `ToolPermissionContext`,
+  `PermissionRule`, `parse_rule`, `match_rule`, plus re-export of
+  `PermissionResult` from `claude_code_sdk.tools` (single source of
+  truth). Rule syntax is `Tool` or `Tool(glob-pattern)` with primary
+  field auto-selected by tool (e.g. `Bash`→`command`, `Read`→`path`).
+  Precedence: deny > allow > ask; unmatched input yields ask with reason
+  `"no matching rule"`. Ports CCB `src/permissions/**` +
+  `src/ToolPermissionContext.ts`. 13-test suite.
 
 ### Known gaps
 
 - Five of twelve barrels are placeholder-only (mcp, hooks, memdir,
-  skills, plugins, commands populated in Plans 07+09+13+11+10+12);
-  remaining five drain over milestones 0.2.x -- 0.5.x.
+  skills, plugins, commands, permissions populated in Plans
+  07+09+13+11+10+12+15); remaining five drain over milestones
+  0.2.x -- 0.5.x.
 - Pyright runs with `continue-on-error: true` during alpha carve-in; will be
   hard-failed once all barrels are populated.
 
