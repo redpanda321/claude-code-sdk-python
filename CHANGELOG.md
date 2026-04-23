@@ -39,11 +39,16 @@ Version strings are derived from git tags via `hatch-vcs`.
   PyPI trusted publishing via OIDC (`pypa/gh-action-pypi-publish@release/v1`),
   triggered by `v*` tag push or manual `workflow_dispatch`. **Held**: no tag
   is pushed in this phase; first publish (`0.1.0a1`) is a separate follow-up.
+- **`claude_code_sdk.mcp`** (Plan 07): `McpClient`, `mcp_client`,
+  `McpServerSpec`, `McpToolRef`, `McpCallResult`, `McpTransport`. Async
+  wrapper over the PyPI `mcp` package (stdio + SSE transports) with
+  lazy transport imports and Pydantic v2 snake_case schemas. Ports CCB's
+  MCP client surface. 12-test contract suite.
 
 ### Known gaps
 
-- Eleven of twelve barrels are placeholder-only; population drains over
-  milestones 0.2.x -- 0.5.x.
+- Ten of twelve barrels are placeholder-only (mcp populated in Plan 07);
+  remaining ten drain over milestones 0.2.x -- 0.5.x.
 - Pyright runs with `continue-on-error: true` during alpha carve-in; will be
   hard-failed once all barrels are populated.
 

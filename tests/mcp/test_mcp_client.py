@@ -69,7 +69,7 @@ class _FakeCallToolResp:
 class _FakeSession:
     """Stand-in for mcp.ClientSession; last-instance tracked in a class attr."""
 
-    last: "_FakeSession | None" = None
+    last: _FakeSession | None = None
 
     def __init__(self, read: Any, write: Any) -> None:
         self.read: Any = read
@@ -78,7 +78,7 @@ class _FakeSession:
         self.closed: bool = False
         _FakeSession.last = self
 
-    async def __aenter__(self) -> "_FakeSession":
+    async def __aenter__(self) -> _FakeSession:
         return self
 
     async def __aexit__(
@@ -143,9 +143,7 @@ def patched_mcp(monkeypatch: pytest.MonkeyPatch) -> dict[str, Any]:
 
 
 async def test_connect_stdio_initializes_session(patched_mcp: dict[str, Any]) -> None:
-    c = McpClient(
-        McpServerSpec(name="s1", command="/bin/srv", args=["-q"], env={"K": "V"})
-    )
+    c = McpClient(McpServerSpec(name="s1", command="/bin/srv", args=["-q"], env={"K": "V"}))
     await c.connect()
     assert _FakeSession.last is not None
     assert _FakeSession.last.initialized is True
