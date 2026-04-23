@@ -1,14 +1,35 @@
-"""providers -- Model-provider abstractions.
+"""Provider layer. Ported 1:1 from CCB ``src/services/api/**`` per CONTEXT D-18.
 
-Roadmap (populated in follow-up phases):
-    - src/claude_code_sdk/providers/<anthropic|bedrock|vertex|openai_compat|glm>.py
-        ported from hanggent/external/claude-code/src/services/api/**
-    (Anthropic Messages API, AWS Bedrock, Google Vertex AI, OpenAI-compat, GLM)
-
-Shape reference: claude-code-sdk-ts package export `./providers`
-  (see hanggent/external/claude-code-sdk-ts/package.json[exports])
+All five vendors (Anthropic, Bedrock, Vertex, OpenAI-compat, GLM) implement
+the :class:`Provider` Protocol. boto3 / google-auth are declared as optional
+extras (``claude-code-sdk[bedrock]``, ``claude-code-sdk[vertex]``) and are
+imported lazily inside their respective provider classes.
 """
 
 from __future__ import annotations
 
-__all__: list[str] = []
+from .anthropic import AnthropicProvider
+from .base import (
+    CompletionRequest,
+    Message,
+    Provider,
+    ProviderError,
+    StreamEvent,
+)
+from .bedrock import BedrockProvider
+from .glm import GlmProvider
+from .openai_compat import OpenAICompatProvider
+from .vertex import VertexProvider
+
+__all__ = [
+    "AnthropicProvider",
+    "BedrockProvider",
+    "CompletionRequest",
+    "GlmProvider",
+    "Message",
+    "OpenAICompatProvider",
+    "Provider",
+    "ProviderError",
+    "StreamEvent",
+    "VertexProvider",
+]

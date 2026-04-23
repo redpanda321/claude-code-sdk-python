@@ -87,12 +87,23 @@ Version strings are derived from git tags via `hatch-vcs`.
   Precedence: deny > allow > ask; unmatched input yields ask with reason
   `"no matching rule"`. Ports CCB `src/permissions/**` +
   `src/ToolPermissionContext.ts`. 13-test suite.
+- **`claude_code_sdk.providers`** (Plan 08): `AnthropicProvider`,
+  `BedrockProvider`, `VertexProvider`, `OpenAICompatProvider`,
+  `GlmProvider`, plus the `Provider` Protocol + `CompletionRequest` /
+  `Message` / `StreamEvent` / `ProviderError` primitives. All HTTP
+  providers use `httpx.AsyncClient` with SSE decoding; `boto3` /
+  `google-auth` are lazy-imported via new optional extras
+  `claude-code-sdk[bedrock]` and `claude-code-sdk[vertex]`.
+  `AnthropicProvider` rejects `base_url` ending in `/v1` to prevent the
+  `/v1/v1/messages` 404 regression (cf. repo memory
+  *Claude Code Anthropic runtime URL normalization*). Ports CCB
+  `src/services/api/**` per CONTEXT D-18. 18-test suite.
 
 ### Known gaps
 
-- Five of twelve barrels are placeholder-only (mcp, hooks, memdir,
-  skills, plugins, commands, permissions populated in Plans
-  07+09+13+11+10+12+15); remaining five drain over milestones
+- Four of twelve barrels are placeholder-only (mcp, hooks, memdir,
+  skills, plugins, commands, permissions, providers populated in Plans
+  07+09+13+11+10+12+15+08); remaining four drain over milestones
   0.2.x -- 0.5.x.
 - Pyright runs with `continue-on-error: true` during alpha carve-in; will be
   hard-failed once all barrels are populated.
