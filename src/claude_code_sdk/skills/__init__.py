@@ -1,13 +1,17 @@
-"""skills -- Skill (slash-command) execution engine.
+"""Skill discovery + SKILL.md frontmatter parsing.
 
-Roadmap (populated in follow-up phases):
-    - src/claude_code_sdk/skills/<loader|runner|frontmatter>.py
-        ported from hanggent/external/claude-code/src/skills/**
-
-Shape reference: claude-code-sdk-ts package export `./skills`
-  (see hanggent/external/claude-code-sdk-ts/package.json[exports])
+Ports CCB ``src/skills/**`` per CONTEXT D-19 (full-parity surface).
 """
 
 from __future__ import annotations
 
-__all__: list[str] = []
+from .discovery import discover_skills
+from .parser import Skill, SkillParseError, parse_skill, parse_skill_text
+
+__all__ = [
+    "Skill",
+    "SkillParseError",
+    "discover_skills",
+    "parse_skill",
+    "parse_skill_text",
+]

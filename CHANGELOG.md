@@ -54,15 +54,21 @@ Version strings are derived from git tags via `hatch-vcs`.
 - **`claude_code_sdk.memdir`** (Plan 13): `load_memories`, `walk_up`,
   `MemoryEntry`, `MemoryScope`. Walks up from cwd collecting `AGENTS.md`,
   `CLAUDE.md`, and nested `.claude/memories/*.md`; appends user-scoped
-  Eight of twelve barrels are placeholder-only (mcp, hooks, memdir
-  populated in Plans 07+09+13); remaining eight drain over milestones
- rc/memdir/**`. 9-test
+  entries from `extra_roots`; dedupes by `(scope, name)`. Concrete
+  `pathlib.Path` per STATE.md decision. Ports CCB `src/memdir/**`. 9-test
   suite.
+- **`claude_code_sdk.skills`** (Plan 11): `Skill`, `SkillParseError`,
+  `parse_skill`, `parse_skill_text`, `discover_skills`. YAML frontmatter
+  parser for `SKILL.md` files plus multi-root discovery with last-writer-
+  wins dedupe by skill name; malformed files and missing roots are
+  silently skipped. Adds `pyyaml>=6` runtime dependency. Ports CCB
+  `src/skills/**`. 12-test suite.
 
 ### Known gaps
 
-- Nine of twelve barrels are placeholder-only (mcp, hooks populated in
-  Plans 07+09); remaining nine drain over milestones 0.2.x -- 0.5.x.
+- Seven of twelve barrels are placeholder-only (mcp, hooks, memdir,
+  skills populated in Plans 07+09+13+11); remaining seven drain over
+  milestones 0.2.x -- 0.5.x.
 - Pyright runs with `continue-on-error: true` during alpha carve-in; will be
   hard-failed once all barrels are populated.
 
